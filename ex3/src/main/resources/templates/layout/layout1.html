@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!--상단부 th:fragment로 setContent 지정, content라는 파라미터를 받을 수 있도록 변경-->
+<th:block th:fragment="setContent(content)">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+
+    <body>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            width:100vw;
+            height: 20vh;
+            background-color: aqua;
+        }
+        .content {
+            width: 100vw;
+            height: 70vh;
+            background-color: lightgray;
+        }
+        .footer {
+            width: 100vw;
+            height: 10vh;
+            background-color: green;
+        }
+    </style>
+
+
+<!--중앙부 th:replace 이용해서 파라미터로 전달되는 content 출력-->
+    <div class="header">
+        <h1>HEADER</h1>
+    </div>
+    <div class="content" >
+
+        <th:block th:replace = "${content}">
+        </th:block>
+
+    </div>
+
+    <div class="footer">
+        <h1>FOOTER</h1>
+    </div>
+
+<!--하단부 th:block을 닫아줌 -->
+    </body>
+</th:block>
+</html>

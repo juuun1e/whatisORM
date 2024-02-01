@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!--전체 내용은 layout1.html로 처리하고 파라미터로 현재 파일의 content부분만을 전달-->
+<th:block th:replace="~{/layout/layout1 :: setContent(~{this ::content}) }">
+
+    <th:block th:fragment="content">
+
+        <h1>exTemplate Page 내용 바뀌는 부분</h1>
+
+    </th:block>
+
+</th:block>
+
+</body>
+</html>

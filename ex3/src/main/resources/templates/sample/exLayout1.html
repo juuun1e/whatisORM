@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <!--fragment2.html 전체를 가져와서 사용하는 코드-->
+    <!-- '::' 뒤에는 fragment의 이름을 지정하거나, CSS의 #id와 같은 선택자 사용 가능, '::' 이하 생략 시 해당 파일 전체 내용-->
+    <h1>Fragment Test</h1>
+    <div style="border: 1px solid blue">
+
+        <th:block th:replace="~{/fragments/fragment2}"></th:block>
+    </div>
+
+    <!--fragment1.html의 조각을 가져와서 사용하는 코드-->
+    <!--<div>나 <th:block> 이용해 사용 / th:replace와 th:insert의 차이 -> insert 사용하면 div 밑에 div태그 생성 -->
+    <h1>Layout 1 - 1</h1>
+    <div th:replace="~{/fragments/fragment1 :: part1}"></div>
+
+    <h1>Layout 1 - 2</h1>
+    <div th:insert="~{/fragments/fragment1 :: part2}"></div>
+
+    <h1>Layout 1 - 3</h1>
+    <th:block th:replace="~{/fragments/fragment1 :: part3}"></th:block>
+
+</body>
+</html>

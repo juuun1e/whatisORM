@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <!--Thymeleaf에서의 반복문 th:each="변수:${목록}-->
+    <ul>
+        <il th:each="dto, state : ${list}">
+            [[${state.index}]] --- [[${dto}]]
+            <!--state 변수 : index속성은 0부터 시작, count속성은 1부터 시작-->
+        </il>
+    </ul>
+
+    <!--Thymeleaf에서의 제어문 처리 th:if~unless -->
+    <!--sno가 5로 나눈 나머지가 0인 경우(5의 배수)에는 sno만 출력하고 그렇지 않으면 DTO의 first를 출력하라-->
+    <ul>
+        <li th:each="dto, state : ${list}" >
+            <span th:if="${dto.sno % 5 == 0}" th:text="${'-----------------' +dto.sno}"></span>
+            <span th:unless="${dto.sno % 5 == 0}" th:text="${dto.first}"></span>
+        </li>
+    </ul>
+
+    <hr/>
+
+    <!--th:if가 번거롭다면 삼항연산자 방식 : 특이하게 단순 if와 같이 2개의 항만으로 처리 가능-->
+    <ul>
+        <li th:each="dto, state : ${list}"  th:text="${dto.sno  % 5 == 0 }? ${dto.sno}">
+        </li>
+    </ul>
+
+    <hr/>
+
+    <!--위처럼 나머지가 0인 경우에만 sno를 출력하고, 나머지는 first를 출력하고 싶다면 ?뒤에 :${dto.first} -->
+    <!--th:block => 별도의 태그가 불필요, 실제화면에서는 html로 처리되지 않기에 루프를 별도 처리하는 용도로 많이 사용됨-->
+    <ul>
+        <th:block th:each="dto: ${list}">
+            <li th:text="${dto.sno % 5 == 0}?${dto.sno}:${dto.first}"></li>
+        </th:block>
+    </ul>
+
+    <hr/>
+
+    <!--특정 상황에만 적용하는 CSS 클래스를 지정하는 작업이 편리-->
+    <!--나머지가 0인 경우에만 CSS 적용, '?' 뒤에 하나의 결과만 반영-->
+    <style>
+        .target {
+            background-color: red;
+        }
+    </style>
+
+    <ul>
+        <li th:each="dto, state : ${list}"  th:class="${dto.sno % 5 == 0}?'target'" th:text="${dto}">
+        </li>
+    </ul>
+
+
+</body>
+</html>
