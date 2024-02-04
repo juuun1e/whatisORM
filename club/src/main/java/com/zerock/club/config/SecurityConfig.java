@@ -50,8 +50,8 @@ public class SecurityConfig {
                 .formLogin(withDefaults()) // 인증, 인가 시 로그인 화면
                 .csrf(csrf -> csrf.disable()) //CSRF(Cross Site Request Forgery) - 비활성화
                 .logout((logout) -> logout
-                        .permitAll()
-                );
+                        .permitAll())
+                .oauth2Login(withDefaults());
         return http.build();
     }
 
