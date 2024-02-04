@@ -1,5 +1,6 @@
 package com.zerock.club.config;
 
+import com.zerock.club.security.handler.ClubLoginSuccessHandler;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -51,8 +52,14 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) //CSRF(Cross Site Request Forgery) - 비활성화
                 .logout((logout) -> logout
                         .permitAll())
-                .oauth2Login(withDefaults());
+            .oauth2Login(oauth2 -> oauth2
+                .successHandler(clubLoginSuccessHandler()) // OAuth2 로그인 성공 시 처리
+            );
         return http.build();
     }
 
+    @Bean
+    public ClubLoginSuccessHandler clubLoginSuccessHandler(){
+        return new ClubLoginSuccessHandler(passwordEncoder());
+    }
 }
