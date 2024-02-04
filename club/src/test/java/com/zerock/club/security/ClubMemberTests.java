@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -47,5 +48,20 @@ public class ClubMemberTests {
 
             clubMemberRepository.save(clubMember);
         });
+    }
+
+    //left outer join으로 처리되도록, 권한도 함께 로딩
+    // ㄴ> 조인 수행 시 먼저 표기된 좌측 테이블에 해당하는 데이터를 먼저 읽은 후, 나중 표기된 우측 테이블에서 join 대상 데이터를 읽어옴
+    // ㄴ> Table A와 B가 있을 때 Table A가 기준이 됨, B와 비교해서 B의 join컬럼에서 같은 값이 있을 때 해당 데이터를 가져오고,
+    // B의 join컬럼에서 같은 값이 없는 경우에는 B테이블에서 가져오는 컬럼들은 NULL값으로 채움
+    @Test
+    public void testRead(){
+
+        Optional<ClubMember> result = clubMemberRepository.findByEmail("user95@zerock.org",false);
+
+        ClubMember clubMember = result.get();
+
+        System.out.println(clubMember);
+
     }
 }
