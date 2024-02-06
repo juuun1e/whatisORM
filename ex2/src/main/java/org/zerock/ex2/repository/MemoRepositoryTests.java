@@ -19,7 +19,7 @@ import java.util.stream.IntStream;
 @SpringBootTest
 public class MemoRepositoryTests {
 
-    @Autowired
+    @Autowired // 컨테이너에서 찾아 주입시킴
     MemoRepository memoRepository;
 
     @Test

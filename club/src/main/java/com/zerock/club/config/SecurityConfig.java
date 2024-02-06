@@ -55,9 +55,9 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) //CSRF(Cross Site Request Forgery) - 비활성화
                 .logout((logout) -> logout
                         .permitAll())
-            .oauth2Login(oauth2 -> oauth2
-                .successHandler(clubLoginSuccessHandler())) // OAuth2 로그인 성공 시 처리
-            .rememberMe(Customizer.withDefaults());
+                .oauth2Login(oauth2 -> oauth2
+                        .successHandler(clubLoginSuccessHandler())) // OAuth2 로그인 성공 시 처리
+                .rememberMe(Customizer.withDefaults());
         return http.build();
     }
 

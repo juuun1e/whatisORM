@@ -18,4 +18,7 @@ public interface MemoRepository extends JpaRepository<Memo, Long> {
 
     //deleteBy 특정 조건에 맞는 삭제 처리 : 메모의 번호가 10보다 작은 데이터를 삭제한다면
     void deleteMemoByMnoLessThan(Long num);
+
+    @Override
+    void flush();
 }
