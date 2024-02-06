@@ -1,11 +1,14 @@
 package com.zerock.club.config;
 
 import com.zerock.club.security.filter.ApiCheckFilter;
+import com.zerock.club.security.filter.ApiLoginFilter;
 import com.zerock.club.security.handler.ClubLoginSuccessHandler;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -61,6 +64,19 @@ public class SecurityConfig {
                         .successHandler(clubLoginSuccessHandler())) // OAuth2 로그인 성공 시 처리
                 .rememberMe(Customizer.withDefaults())
                 .addFilterBefore(apiCheckFilter(), UsernamePasswordAuthenticationFilter.class); // 필터의 동작 순서 조절
+
+        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+
+        AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
+
+        //반드시 필요
+        http.authenticationManager(authenticationManager);
+
+        //ApiLoginFilter 경로 지정, 동작 순서 조절
+        ApiLoginFilter apiLoginFilter = new ApiLoginFilter("/api/login");
+        apiLoginFilter.setAuthenticationManager(authenticationManager);
+
+        http.addFilterBefore(apiLoginFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
