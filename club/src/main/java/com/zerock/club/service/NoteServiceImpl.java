@@ -69,7 +69,11 @@ public class NoteServiceImpl implements NoteService{
     public List<NoteDTO> getAllWithWriter(String writerEmail) {
 
         List<Note> noteList = noteRepository.getList(writerEmail);
-
-        return noteList.stream().map(note -> entityToDTO(note).collect(Collectors.toList()));
+        // return noteList.stream().map(note -> entityToDTO(note).collect(Collectors.toList()));}
+        // collect(Collectors.toList()))부분이 map함수의 결과를 얻은 스트림을 수집하는 것이기에 map메서드의 외부에 위치해야 함
+        return noteList.stream()
+                .map(this::entityToDTO)  //this::entityToDTO는 메서드 레퍼런스로, Note를 NoteDTO로 변환하는 메서드를 가리킴
+                .collect(Collectors.toList());  // 변환된 NoteDTO들을 리스트로 변환하여 수집
     }
+
 }
