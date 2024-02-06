@@ -1,5 +1,6 @@
 package com.zerock.club.config;
 
+import com.zerock.club.security.filter.ApiCheckFilter;
 import com.zerock.club.security.handler.ClubLoginSuccessHandler;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -57,12 +59,19 @@ public class SecurityConfig {
                         .permitAll())
                 .oauth2Login(oauth2 -> oauth2
                         .successHandler(clubLoginSuccessHandler())) // OAuth2 로그인 성공 시 처리
-                .rememberMe(Customizer.withDefaults());
+                .rememberMe(Customizer.withDefaults())
+                .addFilterBefore(apiCheckFilter(), UsernamePasswordAuthenticationFilter.class); // 필터의 동작 순서 조절
         return http.build();
     }
 
     @Bean
     public ClubLoginSuccessHandler clubLoginSuccessHandler(){
         return new ClubLoginSuccessHandler(passwordEncoder());
+    }
+
+
+    @Bean
+    public ApiCheckFilter apiCheckFilter(){
+        return new ApiCheckFilter("/notes/**/*");
     }
 }
