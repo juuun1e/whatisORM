@@ -2,6 +2,7 @@ package com.zerock.club.config;
 
 import com.zerock.club.security.filter.ApiCheckFilter;
 import com.zerock.club.security.filter.ApiLoginFilter;
+import com.zerock.club.security.handler.ApiLoginFailHandler;
 import com.zerock.club.security.handler.ClubLoginSuccessHandler;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
@@ -73,8 +74,9 @@ public class SecurityConfig {
         http.authenticationManager(authenticationManager);
 
         //ApiLoginFilter 경로 지정, 동작 순서 조절
-        ApiLoginFilter apiLoginFilter = new ApiLoginFilter("/api/login");
+        ApiLoginFilter apiLoginFilter = new ApiLoginFilter("/api/login",jwtUtill());
         apiLoginFilter.setAuthenticationManager(authenticationManager);
+        apiLoginFilter.setAuthenticationFailureHandler(new ApiLoginFailHandler());
 
         http.addFilterBefore(apiLoginFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
