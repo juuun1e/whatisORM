@@ -28,8 +28,8 @@ public class JWTUtil {
     //문자열 자체를 알면 누구든 API를 사용할 수 잇다는 문제 발생 => 만료기간(expire)설정, secretKey를 이용하여 Signature생성
     return Jwts.builder()
         .setIssuedAt(new Date())
-        //.setExpiration(Date.from(ZonedDateTime.now().plusMinutes(expire).toInstant()))
-        .setExpiration(Date.from(ZonedDateTime.now().plusSeconds(1).toInstant()))
+        .setExpiration(Date.from(ZonedDateTime.now().plusMinutes(expire).toInstant()))
+        //.setExpiration(Date.from(ZonedDateTime.now().plusSeconds(1).toInstant()))
         .claim("sub",content) //sub라는 이름을 가지는 Claim : 사용자 이메일 주소를 입력해주어 나중에 사용할 수 있도록 구성
         .signWith(SignatureAlgorithm.HS512, secretKey.getBytes(StandardCharsets.UTF_8))
         .compact();

@@ -1,5 +1,7 @@
 package com.zerock.club.security.filter;
 
+import com.zerock.club.security.dto.ClubAuthMemberDTO;
+import com.zerock.club.security.util.JWTUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,9 +19,14 @@ import java.io.IOException;
 public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 //AbstractAuthenticationProcessingFilter - 실행문 없음 : 추상클래스로 설계
 
+  //JWTUtil을 주입받는 구조로 수정
+  private JWTUtil jwtUtil;
+
   public ApiLoginFilter(String defaultFilterProcessesUrl){
 
     super(defaultFilterProcessesUrl);
+    this.jwtUtil = jwtUtil;
+
   }
 
   //상속 : attemptAuthentication() 추상메서드와 문자열도 패턴을 받는 생성자가 반드시 필요
@@ -44,13 +51,30 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
   //AbstractAuthenticationProcessingFilter클래스에 성공 처리 메서드를 재정의해서 구현
   //successfulAuthentication()의 마지막 파라미터 : 성공한 사용자 인증정보를 가지고 있는 Authentication객체
   @Override
-  protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult)
-    throws IOException, ServletException {
+  protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+                                          FilterChain chain, Authentication authResult) throws IOException, ServletException {
 
     log.info("---------------------ApiLoginFilter--------------------------");
     log.info("successfulAuthentication: " + authResult);
 
     log.info(authResult.getPrincipal());
+
+    //email address
+    String email = ((ClubAuthMemberDTO)authResult.getPrincipal()).getUsername();
+
+    //주입받은 jwtUtil 이용하여 문자열 발행
+    String token = null;
+    try {
+      token = jwtUtil.generateToken(email);
+
+      response.setContentType("text/plain");
+      response.getOutputStream().write(token.getBytes());
+
+      log.info(token);
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
 
   }
 }

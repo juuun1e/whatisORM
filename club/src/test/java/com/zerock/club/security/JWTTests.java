@@ -4,6 +4,7 @@ import com.zerock.club.security.util.JWTUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+//jwt검증에 문제가 없다면 최종적으로 ApiLoginFilter와 ApiCheckFilter에 적용
 public class JWTTests {
 
   private JWTUtil jwtUtil;

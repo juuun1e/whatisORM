@@ -2,7 +2,6 @@ package com.zerock.club.config;
 
 import com.zerock.club.security.filter.ApiCheckFilter;
 import com.zerock.club.security.filter.ApiLoginFilter;
-import com.zerock.club.security.handler.ApiLoginFailHandler;
 import com.zerock.club.security.handler.ClubLoginSuccessHandler;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
@@ -52,35 +51,42 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         log.info("------------filterChain-----------");
-        http
-                .authorizeRequests(authorizeRequests ->   authorizeRequests
-                                        .requestMatchers("/sample/all").permitAll() //모든 사용자에게 허가
-                                        .requestMatchers("/sample/member").hasRole("USER")
-                )
-                .formLogin(withDefaults()) // 인증, 인가 시 로그인 화면
-                .csrf(csrf -> csrf.disable()) //CSRF(Cross Site Request Forgery) - 비활성화
-                .logout((logout) -> logout
-                        .permitAll())
-                .oauth2Login(oauth2 -> oauth2
-                        .successHandler(clubLoginSuccessHandler())) // OAuth2 로그인 성공 시 처리
-                .rememberMe(Customizer.withDefaults())
-                .addFilterBefore(apiCheckFilter(), UsernamePasswordAuthenticationFilter.class); // 필터의 동작 순서 조절
 
+        //인증관리자 설정
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
 
+        authenticationManagerBuilder.userDetailsService(authenticationManagerBuilder.getDefaultUserDetailsService()).passwordEncoder(passwordEncoder());
+
+        //get 인증관리자
         AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
 
         //AbstractAuthenticationProcessingFilter는 반드시 AuthenticationManager가 필요
         http.authenticationManager(authenticationManager);
 
+        http.authorizeRequests(authorizeRequests ->   authorizeRequests
+            .requestMatchers("/sample/all").permitAll() //모든 사용자에게 허가
+            .requestMatchers("/sample/member").hasRole("USER")
+            )
+            .formLogin(withDefaults()) // 인증, 인가 시 로그인 화면
+            .csrf(csrf -> csrf.disable()) //CSRF(Cross Site Request Forgery) - 비활성화
+            .logout((logout) -> logout
+                .permitAll())
+            .oauth2Login(oauth2 -> oauth2
+                .successHandler(clubLoginSuccessHandler())) // OAuth2 로그인 성공 시 처리
+            .rememberMe(Customizer.withDefaults())
+            .addFilterBefore(apiCheckFilter(), UsernamePasswordAuthenticationFilter.class) // 필터의 동작 순서 조절
+            .addFilterBefore(apiLoginFilter(authenticationManager), UsernamePasswordAuthenticationFilter.class);
+        return http.build();
+    }
+
+    public  ApiLoginFilter apiLoginFilter(AuthenticationManager authenticationManager) throws Exception {
         //ApiLoginFilter 추가 -  경로 지정, 동작 순서 조절
         ApiLoginFilter apiLoginFilter = new ApiLoginFilter("/api/login");
         apiLoginFilter.setAuthenticationManager(authenticationManager);
         //인증 실패 처리
-        apiLoginFilter.setAuthenticationFailureHandler(new ApiLoginFailHandler());
+        //apiLoginFilter.setAuthenticationFailureHandler(new ApiLoginFailHandler());
 
-        http.addFilterBefore(apiLoginFilter, UsernamePasswordAuthenticationFilter.class);
-        return http.build();
+        return apiLoginFilter;
     }
 
     @Bean
