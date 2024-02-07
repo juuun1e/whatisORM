@@ -10,6 +10,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import java.io.IOException;
 import java.io.PrintWriter;
 
+//AbstractAuthenticationProcessingFilter에는 setAuthenticationFailureHandler()로 인증 실패 처리 지정 가능
 @Log4j2
 public class ApiLoginFailHandler implements AuthenticationFailureHandler {
 
@@ -21,7 +22,7 @@ public class ApiLoginFailHandler implements AuthenticationFailureHandler {
     log.info(exception.getMessage());
 
     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-    //json리턴
+    //json리턴, 인증 실패 시 401상태코드 반환
     response.setContentType("application/json;charset=utf-8");
     JSONObject json = new JSONObject();
     String message = exception.getMessage();

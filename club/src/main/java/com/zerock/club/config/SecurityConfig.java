@@ -70,12 +70,13 @@ public class SecurityConfig {
 
         AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
 
-        //반드시 필요
+        //AbstractAuthenticationProcessingFilter는 반드시 AuthenticationManager가 필요
         http.authenticationManager(authenticationManager);
 
-        //ApiLoginFilter 경로 지정, 동작 순서 조절
-        ApiLoginFilter apiLoginFilter = new ApiLoginFilter("/api/login",jwtUtill());
+        //ApiLoginFilter 추가 -  경로 지정, 동작 순서 조절
+        ApiLoginFilter apiLoginFilter = new ApiLoginFilter("/api/login");
         apiLoginFilter.setAuthenticationManager(authenticationManager);
+        //인증 실패 처리
         apiLoginFilter.setAuthenticationFailureHandler(new ApiLoginFailHandler());
 
         http.addFilterBefore(apiLoginFilter, UsernamePasswordAuthenticationFilter.class);
@@ -88,6 +89,7 @@ public class SecurityConfig {
     }
 
 
+    // 엔트패턴(?,*,**)'/notes/'로 시작하는 경로에만 로그가 출력되도록 설정
     @Bean
     public ApiCheckFilter apiCheckFilter(){
         return new ApiCheckFilter("/notes/**/*");

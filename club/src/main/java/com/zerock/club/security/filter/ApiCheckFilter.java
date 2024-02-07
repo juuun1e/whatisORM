@@ -62,12 +62,15 @@ public class ApiCheckFilter extends OncePerRequestFilter {
                 return;
             }
     }
-        //다음 필터의 단계로 넘어가기 위한 역할
+        //doFilter() - 다음 필터의 단계로 넘어가기 위한 역할
         filterChain.doFilter(request,response);
     }
 
+    //특정 API를 호출하는 클라이언트에서는 다른 서버나 Application으로 실행되기에 쿠키나 세션 활용 불가
+    // => Request를 전송할 때 Http헤더 메시지에 특별한 값을 지정해서 전송 : 파악한 헤더 값으로 사용자 요청이 정상적인지 파악
     private boolean checkAuthHeader(HttpServletRequest request) {
 
+        //'Authorization'이라는 헤더의 값을 확인하고 boolean타입의 결과를 반환
         boolean checkResult = false;
 
         String authHeader = request.getHeader("Authorization");
