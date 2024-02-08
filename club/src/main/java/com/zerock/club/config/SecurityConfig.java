@@ -3,6 +3,8 @@ package com.zerock.club.config;
 import com.zerock.club.security.filter.ApiCheckFilter;
 import com.zerock.club.security.filter.ApiLoginFilter;
 import com.zerock.club.security.handler.ClubLoginSuccessHandler;
+import com.zerock.club.security.service.CulbUserDetailsService;
+import com.zerock.club.security.util.JWTUtil;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,10 +28,15 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Log4j2
 public class SecurityConfig {
 
+    private final CulbUserDetailsService userDetailsService;
+
+    public SecurityConfig(CulbUserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
+
     // 가장 먼저 설정이 필요한 클래스 : PasswordEncoder
     @Bean
     public PasswordEncoder passwordEncoder(){
-
         return new BCryptPasswordEncoder();
     }
 
@@ -46,6 +53,7 @@ public class SecurityConfig {
 //    }
 // -> ClubUserDetailsService가 빈으로 등록되면 자동으로 UserDetailsService로 인식하기 때문에 더 이상 사용하지 않음
 
+
     //인가가 필요한 리소스 설정 방법 : 1)Security Config 설정을 통해 패턴 지정, 2)어노테이션 이용해 접근 제한
     //filterChain()을 작성하여 세밀한 인증/인가에 대한 처리 추가 - HttpSecurity API를 이용하여 특정한 경로 설정 가능
     @Bean
@@ -54,19 +62,17 @@ public class SecurityConfig {
 
         //인증관리자 설정
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-
-        authenticationManagerBuilder.userDetailsService(authenticationManagerBuilder.getDefaultUserDetailsService()).passwordEncoder(passwordEncoder());
-
+        authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
         //get 인증관리자
         AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
 
         //AbstractAuthenticationProcessingFilter는 반드시 AuthenticationManager가 필요
         http.authenticationManager(authenticationManager);
 
-        http.authorizeRequests(authorizeRequests ->   authorizeRequests
-            .requestMatchers("/sample/all").permitAll() //모든 사용자에게 허가
-            .requestMatchers("/sample/member").hasRole("USER")
-            )
+        http
+            .authorizeRequests(authorizeRequests ->   authorizeRequests
+                    .requestMatchers("/sample/all").permitAll() //모든 사용자에게 허가
+                    .requestMatchers("/sample/member").hasRole("USER"))
             .formLogin(withDefaults()) // 인증, 인가 시 로그인 화면
             .csrf(csrf -> csrf.disable()) //CSRF(Cross Site Request Forgery) - 비활성화
             .logout((logout) -> logout
@@ -81,7 +87,7 @@ public class SecurityConfig {
 
     public  ApiLoginFilter apiLoginFilter(AuthenticationManager authenticationManager) throws Exception {
         //ApiLoginFilter 추가 -  경로 지정, 동작 순서 조절
-        ApiLoginFilter apiLoginFilter = new ApiLoginFilter("/api/login");
+        ApiLoginFilter apiLoginFilter = new ApiLoginFilter("/api/login",jwtUtil());
         apiLoginFilter.setAuthenticationManager(authenticationManager);
         //인증 실패 처리
         //apiLoginFilter.setAuthenticationFailureHandler(new ApiLoginFailHandler());
@@ -94,10 +100,14 @@ public class SecurityConfig {
         return new ClubLoginSuccessHandler(passwordEncoder());
     }
 
+    @Bean
+    public JWTUtil jwtUtil() {
+        return new JWTUtil();
+    }
 
     // 엔트패턴(?,*,**)'/notes/'로 시작하는 경로에만 로그가 출력되도록 설정
     @Bean
     public ApiCheckFilter apiCheckFilter(){
-        return new ApiCheckFilter("/notes/**/*");
+        return new ApiCheckFilter("/notes/**/*", jwtUtil());
     }
 }

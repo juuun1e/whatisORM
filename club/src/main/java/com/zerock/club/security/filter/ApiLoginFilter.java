@@ -22,7 +22,7 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
   //JWTUtil을 주입받는 구조로 수정
   private JWTUtil jwtUtil;
 
-  public ApiLoginFilter(String defaultFilterProcessesUrl){
+  public ApiLoginFilter(String defaultFilterProcessesUrl, JWTUtil jwtUtil){
 
     super(defaultFilterProcessesUrl);
     this.jwtUtil = jwtUtil;
