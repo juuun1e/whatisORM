@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b44d6304-9dbf-43e9-915d-30ae7bf6128e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../whereApplication/src/main/java/com/zerock/where/controller/SampleController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../whereApplication/src/main/java/com/zerock/where/entity/MemberUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../whereApplication/src/main/java/com/zerock/where/entity/MemberUserRole.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../whereApplication/src/main/java/com/zerock/where/repository/MemberUserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../whereApplication/src/main/java/com/zerock/where/security/dto/AuthMemberUserDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../whereApplication/src/main/java/com/zerock/where/security/handler/WhereLoginSuccessHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../whereApplication/src/main/java/com/zerock/where/security/service/WhereOAuth2UserDetailsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../whereApplication/src/main/java/com/zerock/where/security/service/WhereUserDetailsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../whereApplication/src/test/java/com/zerock/where/security/MemberUserTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../whereApplication/src/test/java/com/zerock/where/security/PasswordTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zerock/club/ClubApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zerock/club/config/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zerock/club/controller/NoteController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zerock/club/controller/SampleController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zerock/club/dto/NoteDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zerock/club/entity/BaseEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zerock/club/entity/ClubMember.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zerock/club/entity/ClubMemberRole.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zerock/club/entity/Note.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zerock/club/repository/ClubMemberRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zerock/club/repository/NoteRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zerock/club/security/dto/ClubAuthMemberDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zerock/club/security/filter/ApiCheckFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zerock/club/security/handler/ClubLoginSuccessHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zerock/club/security/service/ClubOAuth2UserDetailsService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zerock/club/security/service/CulbUserDetailsService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zerock/club/service/NoteService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zerock/club/service/NoteServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/zerock/club/ClubApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/zerock/club/security/ClubMemberTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/zerock/club/security/PasswordTests.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="ROOT_SYNC" value="SYNC" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2bkZASb8tVxSJTU9xA63GaRuuHt" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.clubApplication.executor": "Run",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Gradle.clubGradle.executor": "Run",
+    "JUnit.ClubMemberTests.executor": "Debug",
+    "JUnit.ClubMemberTests.insertDummies.executor": "Run",
+    "JUnit.ClubMemberTests.testRead.executor": "Run",
+    "JUnit.PasswordTests.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/dev/workspace/github/whatisORM/whereApplication",
+    "project.structure.last.edited": "Problems",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.5965517"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\dev\workspace\github\whatisORM\club\src\main\resources\templates\sample" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="Application" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.clubApplication">
+    <configuration name="clubApplication" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.zerock.where.ClubApplication" />
+      <module name="club" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="clubGradle" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="ClubMemberTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="club" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.zerock.where.security.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.zerock.club.security" />
+      <option name="MAIN_CLASS_NAME" value="com.zerock.where.security.ClubMemberTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ClubMemberTests.insertDummies" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="club" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.zerock.where.security.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.zerock.club.security" />
+      <option name="MAIN_CLASS_NAME" value="com.zerock.where.security.ClubMemberTests" />
+      <option name="METHOD_NAME" value="insertDummies" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ClubMemberTests.testRead" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="club" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.zerock.where.security.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.zerock.club.security" />
+      <option name="MAIN_CLASS_NAME" value="com.zerock.where.security.ClubMemberTests" />
+      <option name="METHOD_NAME" value="testRead" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PasswordTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="club" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.zerock.where.security.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.zerock.club.security" />
+      <option name="MAIN_CLASS_NAME" value="com.zerock.where.security.PasswordTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.clubApplication" />
+      <item itemvalue="Gradle.clubGradle" />
+      <item itemvalue="JUnit.ClubMemberTests" />
+      <item itemvalue="JUnit.ClubMemberTests.insertDummies" />
+      <item itemvalue="JUnit.ClubMemberTests.testRead" />
+      <item itemvalue="JUnit.PasswordTests" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.ClubMemberTests" />
+        <item itemvalue="JUnit.ClubMemberTests.testRead" />
+        <item itemvalue="JUnit.ClubMemberTests.insertDummies" />
+        <item itemvalue="JUnit.PasswordTests" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-11.0.21-corretto-11.0.21-f644763e9732-97de7592" />
+        <option value="jdk-17.0.10-corretto-17.0.10-4caba194b151-5cd809f4" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b44d6304-9dbf-43e9-915d-30ae7bf6128e" name="Changes" comment="" />
+      <created>1706760893305</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1706760893305</updated>
+    </task>
+    <servers />
+  </component>
+</project>
