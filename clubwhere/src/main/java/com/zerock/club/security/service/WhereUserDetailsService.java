@@ -1,7 +1,7 @@
 package com.zerock.club.security.service;
 
-import com.zerock.club.entity.MemberUser;
-import com.zerock.club.repository.MemberUserRepository;
+import com.zerock.club.entity.Member;
+import com.zerock.club.repository.MemberRepository;
 import com.zerock.club.security.dto.AuthMemberUserDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class WhereUserDetailsService implements UserDetailsService {
 
     // ClubMemberRepository 연동을 위해 주입받을 수 있는 구조로 변경
-    private final MemberUserRepository repository;
+    private final MemberRepository repository;
 
 
     //주어진 이메일(username)을 사용하여 ClubMember를 찾고, 찾은 정보로 DTO생성하여 반환
@@ -30,14 +30,14 @@ public class WhereUserDetailsService implements UserDetailsService {
         log.info("ClubUserDetailsService loadUserByUsername" + username);
 
         //username이 실제로 CulbMember에서는 email을 의미하기 때문에 이를 사용해서 findByEmail을 호출
-        Optional<MemberUser> result = repository.findByMemId(username, false);
+        Optional<Member> result = repository.findByMemId(username, false);
 
         //사용자가 존재하지 않다면 NotFoundException처리
         if(result.isEmpty()){
             throw new UsernameNotFoundException("Check Email or Social");
         }
 
-        MemberUser member = result.get();
+        Member member = result.get();
 
         log.info("=========================");
         log.info(member);

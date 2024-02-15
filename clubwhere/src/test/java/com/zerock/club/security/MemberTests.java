@@ -1,8 +1,8 @@
 package com.zerock.club.security;
 
-import com.zerock.club.entity.MemberUser;
-import com.zerock.club.entity.MemberUserRole;
-import com.zerock.club.repository.MemberUserRepository;
+import com.zerock.club.entity.Member;
+import com.zerock.club.entity.MemberRole;
+import com.zerock.club.repository.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,10 +12,10 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 @SpringBootTest
-public class MemberUserTests {
+public class MemberTests {
 
     @Autowired
-    private MemberUserRepository memberRepository;
+    private MemberRepository memberRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -28,7 +28,7 @@ public class MemberUserTests {
         //91-100 USER,MANAGER,ADMIN
 
         IntStream.rangeClosed(1,100).forEach(i -> {
-            MemberUser member = MemberUser.builder()
+            Member member = Member.builder()
                     .memId("user"+i+"@zerock.org")
                     .memName(" 사용자"+i)
                     .memNickname(" 사용자"+i)
@@ -36,14 +36,10 @@ public class MemberUserTests {
                     .memPw(passwordEncoder.encode("1111"))
                     .build();
             //default role
-            member.addMemberRole((MemberUserRole.USER));
+            member.addMemberRole((MemberRole.USER));
 
             if(i>80){
-                member.addMemberRole(MemberUserRole.MANAGER);
-            }
-
-            if(i>90){
-                member.addMemberRole(MemberUserRole.ADMIN);
+                member.addMemberRole(MemberRole.ADMIN);
             }
 
             memberRepository.save(member);
@@ -54,9 +50,9 @@ public class MemberUserTests {
     @Test
     public void testRead(){
 
-         Optional<MemberUser> result = memberRepository.findByMemId("user95@zerock.org",false);
+         Optional<Member> result = memberRepository.findByMemId("user95@zerock.org",false);
 
-        MemberUser member = result.get();
+        Member member = result.get();
 
         System.out.println(member);
 

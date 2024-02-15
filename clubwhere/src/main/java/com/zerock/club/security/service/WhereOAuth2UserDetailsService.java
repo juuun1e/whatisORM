@@ -1,8 +1,8 @@
 package com.zerock.club.security.service;
 
-import com.zerock.club.entity.MemberUser;
-import com.zerock.club.entity.MemberUserRole;
-import com.zerock.club.repository.MemberUserRepository;
+import com.zerock.club.entity.Member;
+import com.zerock.club.entity.MemberRole;
+import com.zerock.club.repository.MemberRepository;
 import com.zerock.club.security.dto.AuthMemberUserDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -14,6 +14,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class WhereOAuth2UserDetailsService extends DefaultOAuth2UserService {
 
-    private final MemberUserRepository repository;
+    private final MemberRepository repository;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -59,7 +60,7 @@ public class WhereOAuth2UserDetailsService extends DefaultOAuth2UserService {
 
         log.info("EMAIL: " + email);
 
-        MemberUser member = saveSocialMember(email);
+        Member member = saveSocialMember(email);
 
         //saveSocialMember()한 결과로 나온 member로 DTO 구성
         AuthMemberUserDTO AuthMember = new AuthMemberUserDTO(
@@ -68,8 +69,7 @@ public class WhereOAuth2UserDetailsService extends DefaultOAuth2UserService {
                 true,
                 member.getRoleSet().stream().map(
                                 role -> new SimpleGrantedAuthority("ROLE_"+role.name()))
-                        .collect(Collectors.toList()),
-                oAuth2User.getAttributes() // 수정된 부분
+                        .collect(Collectors.toList()), oAuth2User.getAttributes()
         );
 
         AuthMember.setName(member.getMemName());
@@ -79,21 +79,24 @@ public class WhereOAuth2UserDetailsService extends DefaultOAuth2UserService {
     }
 
 
-    private MemberUser saveSocialMember(String email) {
-        Optional<MemberUser> result = repository.findByMemId(email, true);
+    private Member saveSocialMember(String email) {
+        Optional<Member> result = repository.findByMemId(email, true);
 
         if (result.isPresent()) {
             return result.get();
         }
 
         // 사용자 이름과 비밀번호가 고정 됨, --> 추후 문제될 수 있는 부분
-        MemberUser member = MemberUser.builder().memId(email)
+        Member member = Member.builder()
+                .memId(email)
                 .memName(email)
                 .memPw(passwordEncoder.encode("1111"))
                 .fromSocial(true)
                 .build();
 
-        member.addMemberRole(MemberUserRole.USER);
+        // 기본 역할 USER를 부여
+        member.addMemberRole(MemberRole.USER);
+
         repository.save(member);
         return member;
     }

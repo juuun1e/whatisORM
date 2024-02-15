@@ -4,6 +4,9 @@ import com.zerock.club.security.handler.WhereLoginSuccessHandler;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -31,13 +34,24 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         log.info("------------filterChain-----------");
-        http
-                .authorizeRequests(authorizeRequests ->   authorizeRequests
-                                        .requestMatchers("/sample/all").permitAll() //모든 사용자에게 허가
-                                        .requestMatchers("/sample/member").hasRole("USER")
-                )
-                .formLogin(withDefaults()) // 인증, 인가 시 로그인 화면
-                .csrf(csrf -> csrf.disable()) //CSRF(Cross Site Request Forgery) - 비활성화
+
+        //인증관리자 설정
+        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+        authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        //get 인증관리자
+        AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
+
+        //AbstractAuthenticationProcessingFilter는 반드시 AuthenticationManager가 필요
+        http.authenticationManager(authenticationManager);
+
+
+        http.csrf((csrf) -> csrf.disable())
+                .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers("/myAccount", "/myBalance", "/myLoans", "/myCards").hasRole("ADMIN")
+                        .requestMatchers("/sample/member").hasRole("USER")
+                        .requestMatchers("/notices", "/contact", "/register").permitAll())
+                .formLogin(Customizer.withDefaults())
+                .httpBasic(Customizer.withDefaults())
                 .logout((logout) -> logout
                         .permitAll())
                 .oauth2Login(oauth2 -> oauth2
@@ -51,10 +65,4 @@ public class SecurityConfig {
     public WhereLoginSuccessHandler whereLoginSuccessHandler(){
         return new WhereLoginSuccessHandler(passwordEncoder());
     }
-
-//
-//    @Bean
-//    public ApiCheckFilter apiCheckFilter(){
-//        return new ApiCheckFilter("/notes/**/*");
-//    }
 }
